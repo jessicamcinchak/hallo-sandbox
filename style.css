@@ -1,0 +1,65 @@
+body {
+	font-family: sans-serif;
+	line-height: 125%;
+}
+
+.wrapper {
+	width: 90%;
+	max-width: 800px;
+	padding: 50px;
+	margin: auto;
+	border-radius: 15px;
+	border: 1px solid teal;
+}
+
+.editable {
+	border: 1px dashed olive;
+	cursor: pointer;
+	margin: 35px auto;
+	padding: 10px;
+	border-radius: 8px;
+	background-color: rgb(242,242,242);
+}
+
+.editable--active {
+	background-color: rgb(225, 225, 225);
+}
+
+table {
+	margin: auto;
+}
+
+td, tr { 
+	padding: 3px; 
+}
+
+td {
+	border: 1px solid lightgrey;
+}
+
+a {
+	width: 150px;
+	display: block;
+	margin: auto;
+	color: teal;
+	border-radius: 5px;
+	border: 1.5px solid teal;
+	text-align: center;
+	padding: 20px;
+	text-decoration: none;
+	opacity: 1;
+}
+
+a:hover { opacity: .6; }
+
+h1 {
+	font-size: 17px;
+}
+
+h2 {
+	font-size: 15px;
+}
+
+p, table {
+	font-size: 13px;
+}
