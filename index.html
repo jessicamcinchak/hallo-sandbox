@@ -49,7 +49,7 @@
 		  $('#enable').button().click(function() {
 		  	var $modified = jQuery('#modified');
 	        $('.editable').hallo({
-	          editable: true //activate the editor
+	          editable: true //activate editor on button click
 	        });
 	        $('.editable').bind('halloactivated', function(event, data) {
 	        	$modified.html("Editables are active"); //detects click within editable div
@@ -63,7 +63,7 @@
 	        });
 	      });
 	      $('#disable').button().click(function() {
-	        $('.editable').hallo({editable: false}); //disable button deactivates editor
+	        $('.editable').hallo({editable: false}); //disable editor on button click
 	      });
 	      $('.editable').bind('hallodeactivated', function() {
 	        // $(this).hallo({editable:false});
