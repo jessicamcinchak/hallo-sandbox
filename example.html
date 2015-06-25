@@ -53,22 +53,19 @@
 	        });
 	        $('.editable').bind('halloactivated', function(event, data) {
 	        	$modified.html("Editables are active"); //detects click within editable div
+	        	console.log(($(this).text().length)); //logs number of characters in active div
 	        }).bind('hallomodified', function(event, data) {
-	            $modified.html("Editables have been modified"); // detects adding or deleting characters
+	            $modified.html("Editables have been modified"); //detects adding or deleting characters
 	        }).bind('halloselected', function(event, data) {
-	            $modified.html("Selection made"); // detects highlighting characters
+	            $modified.html("Selection made"); //detects highlighting characters
 	        }).bind('hallounselected', function(event, data) {
 	            $modified.html("Selection removed"); //detects un-highlighting 
-	        }).bind('hallorestored', function(event, data) {
-	            $modified.html("restored"); //not sure what this is doing yet??
 	        });
 	      });
 	      $('#disable').button().click(function() {
-	        $('.editable').hallo({editable: false});
+	        $('.editable').hallo({editable: false}); //disable button deactivates editor
 	      });
 	      $('.editable').bind('hallodeactivated', function() {
-	      	console.log('//');
-	      	// alert($(this).text().length); //alerts number of characters in selected div
 	        // $(this).hallo({editable:false});
 	      });
 		</script>
