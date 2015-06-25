@@ -14,7 +14,8 @@ $(function() {
 				$this.halloDeactivateSiblings(); 
 			}
 		},
-		//Activate parent element. E.g. click on a paragraph and activate the whole div.
+		//Find and activate closest editable parent element. 
+		//E.g. click on a paragraph and activate the outer div.
 		halloActivateClosestEditableParent: function(e) {
 			var $this = $(this),
 				$target = $(e.target),
@@ -47,18 +48,16 @@ $(function() {
 
 	$('.editable').on('click', $.fn.halloActivateClosestEditableParent.bind($(this)));
 
+	// //Future use - introduce react classes for hallo editables
 	// React.createClass({
-
 	// 	componentDidMount: function() {
 	// 		$this = React.findDOMNode(this);
 	// 		this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 	// 		$this.on('click', this.clickCallback);
 	// 	},
-
 	// 	componentWillUnmount: function() {
 	// 		$this.off('click');
 	// 	},
-
 	// 	render: function() {} //this should return div
 	// 	// how to deal with state? 
 	// });
@@ -67,9 +66,9 @@ $(function() {
 		//what should this do? 
 	});
 
-	$('.editable--spreadsheet').bind('hallodeactivated', function() {
+	$('.editable--spreadsheet').bind('hallodeactivated', function() { //why is this deactivated??
 		var $this = $(this),
-			html = $this.html(); 
+			html = $this.html();
 			//add $().tableToJSON() here to convert
 	});
 
