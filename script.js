@@ -86,6 +86,7 @@ $(function() {
 	});
 
 	$('.add-editable').on('click', function() {
-		$('<div class="editable"></div>').insertBefore($(this)); //issue: new editables don't have event listeners
+		$('<div class="editable"></div>').insertBefore($(this)); 
+		//issue: new editables don't have event listeners, or class="editable"
 	});
 });
