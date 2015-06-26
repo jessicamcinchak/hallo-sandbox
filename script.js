@@ -3,12 +3,14 @@ $(function() {
 		halloActivate: function(options) {
 			options = options || {};
 			var $this = $(this),
+				$modified = $('#modified'),
 				e = options.event;
 			if (e != null) {
 				$this.addClass('editable--active');
 				$this.hallo({
 					editable: true //activate hallo editables
 				});
+				$modified.html("Editable is active");
 			}
 			if (options.deactivateSiblings) { 
 				$this.halloDeactivateSiblings(); 
@@ -62,8 +64,19 @@ $(function() {
 	// 	// how to deal with state? 
 	// });
 
-	$('.wrapper').on('dblclick', function(e) {
-		//what should this do? 
+	//Double click on wrapper to deactivate all editables
+	//NOT WORKING
+	$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($(this)));
+
+	//Use hallo events to track modified status of editable
+	var $modified = $('#modified');
+
+	$('.editable').bind('hallomodified', function(event, data) {
+		$modified.html("Editable has been modified"); //detects adding and deleting characters
+	}).bind('halloselected', function(event, data) {
+		$modified.html("Selection made"); //detects highlighting
+	}).bind('hallounselected', function(event, data) {
+		$modified.html("Selection removed"); //detects un-highlighting
 	});
 
 	$('.editable--spreadsheet').bind('hallodeactivated', function() { //why is this deactivated??
@@ -75,30 +88,4 @@ $(function() {
 	$('.add-editable').on('click', function() {
 		$('<div class="editable"></div>').insertBefore($(this)); //issue: new editables don't have event listeners
 	});
-
-	/*$('#enable').button().click(function() {
-		var $modified = jQuery('#modified');
-		$('.editable').hallo({
-			editable: true //activate editor on button click
-		});
-		$('.editable').bind('halloactivated', function(event, data) {
-			$modified.html("Editables are active"); //detects click within editable div
-			console.log(($(this).text().length)); //logs number of characters in active div
-		}).bind('hallomodified', function(event, data) {
-			$modified.html("Editables have been modified"); //detects adding or deleting characters
-		}).bind('halloselected', function(event, data) {
-			$modified.html("Selection made"); //detects highlighting characters
-		}).bind('hallounselected', function(event, data) {
-			$modified.html("Selection removed"); //detects un-highlighting 
-		});
-	});
-	$('#disable').button().click(function() {
-		$('.editable').hallo({
-			editable: false
-		}); //disable editor on button click
-	});
-	$('.editable').bind('hallodeactivated', function() {
-		// $(this).hallo({editable:false});
-	});*/
-
 });
