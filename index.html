@@ -6,6 +6,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 		<script src="http://rangy.googlecode.com/svn/trunk/currentrelease/rangy-core.js"></script>
 		<script src="dist/hallo.js"></script>
+<<<<<<< HEAD
 		<title>Hallo sandbox</title>
 		<style>
 		</style>
@@ -68,6 +69,59 @@
 	      $('.editable').bind('hallodeactivated', function() {
 	        // $(this).hallo({editable:false});
 	      });
+=======
+		<script src="dist/jquery.tabletojson.js"></script>
+		<title>Hallo sandbox</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<div class='wrapper'>
+
+			<!-- <button id="enable">Enable</button>
+	    	<button id="disable">Disable</button> -->
+			<p id="modified">Editables have not been modified</p>
+
+			<h1 class="editable">This is a h1 header with class set to "editable"</h1>
+			<h2 class="editable">This is a h2 header</h2>
+			
+			<div class="editable">
+				<p>
+					This is a paragraph inside a div that has class set to "editable." Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+				</p>
+				<p>
+					This is a second paragraph. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.
+				</p>
+			</div>
+
+			<div class="editable editable--spreadsheet">
+				<table>
+					<th>
+						<td>2000</td>
+						<td>2010</td>
+					</th>
+					<tr>
+						<td>Federal</td>
+						<td>$5.6b</td>
+						<td>$8.2b</td>
+					</tr>
+					<tr>
+						<td>State</td>
+						<td>$1.2b</td>
+						<td>$4.5b</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div class="editable">
+				<p>
+				</p>
+			</div>
+
+			<a href="#" class="add-editable">Add Editable</a>
+
+		</div>
+		<script src="script.js">
+>>>>>>> a0c247d674f259c8c2ea1845c1904b25c8f87f6f
 		</script>
 	</body>
 </html>

@@ -1,0 +1,71 @@
+body {
+	font-family: helvetica, sans-serif;
+	line-height: 125%;
+	background-color: #f7f7f7;
+}
+
+.wrapper {
+	width: 90%;
+	max-width: 800px;
+	padding: 50px;
+	margin: auto;
+	border-radius: 15px;
+/*	border: 1px solid #443094;*/
+	background-color: #f0f0f0;
+}
+
+.editable {
+	border: 1.5px dashed #443094;
+	cursor: pointer;
+	margin: 35px auto;
+	padding: 10px;
+	border-radius: 8px;
+	background-color: #f7f7f7;
+}
+
+.editable--active {
+	background-color: #d9d9d9;
+}
+
+table {
+	margin: auto;
+}
+
+td, tr { 
+	padding: 3px; 
+}
+
+td {
+	border: 1px solid #443094;
+}
+
+a {
+	width: 150px;
+	display: block;
+	margin: auto;
+	color: white;
+	background-color: #443094;
+	border-radius: 5px;
+	border: 1px solid #443094;
+	text-align: center;
+	padding: 20px;
+	text-decoration: none;
+	opacity: 1;
+	font-size: 16px;
+}
+
+a:hover { 
+	opacity: .6;
+}
+
+h1 {
+	font-size: 18px;
+}
+
+h2 {
+	font-size: 16px;
+}
+
+p, table {
+	font-size: 14px;
+}
