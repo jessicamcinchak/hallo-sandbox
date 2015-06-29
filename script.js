@@ -1,5 +1,5 @@
-$(function() {
-	$.fn.extend({
+$(function() { // Create plugins
+	$.fn.extend({ // Extend jQuery prototype ($.fn) object to provide new methods that can be chained to the jQuery() function
 		halloActivate: function(options) {
 			options = options || {};
 			var $this = $(this),
@@ -8,7 +8,14 @@ $(function() {
 			if (e != null) {
 				$this.addClass('editable--active');
 				$this.hallo({
-					editable: true //activate hallo editables
+					editable: true, //activate hallo editables
+					plugins: { //add basic editing toolbar (no icon images yet). Issue: Shows on first element, then "not found"
+						'halloformat': {
+							'bold': true,
+							'italic': true
+						}
+					},
+					toolbar: 'halloToolbarFixed'
 				});
 				$modified.html("Editable is active");
 			}
@@ -16,8 +23,8 @@ $(function() {
 				$this.halloDeactivateSiblings(); 
 			}
 		},
-		//Find and activate closest editable parent element. 
-		//E.g. click on a paragraph and activate the outer div.
+		// Find and activate closest editable parent element
+		// E.g. click on a paragraph and activate the outer div
 		halloActivateClosestEditableParent: function(e) {
 			var $this = $(this),
 				$target = $(e.target),
@@ -35,8 +42,8 @@ $(function() {
 			});
 			$this.trigger('hallodeactivated');
 		},
-		//When you activate a new element, deactive previously active element. 
-		//Only one editable should be active at a time.
+		// When you activate a new element, deactive previously active element
+		// Only one editable should be active at a time
 		halloDeactivateSiblings: function(e) {
 			var $this = $(this),
 				$parent = $this.parent();
@@ -50,7 +57,7 @@ $(function() {
 
 	$('.editable').on('click', $.fn.halloActivateClosestEditableParent.bind($(this)));
 
-	// //Future use - introduce react classes for hallo editables
+	// // Future use - introduce react classes for hallo editables
 	// React.createClass({
 	// 	componentDidMount: function() {
 	// 		$this = React.findDOMNode(this);
@@ -64,13 +71,12 @@ $(function() {
 	// 	// how to deal with state? 
 	// });
 
-	//Double click on wrapper to deactivate all editables
-	//NOT WORKING
+	// NOT WORKING - Double click on wrapper to deactivate all editables
 	$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($(this)));
 
-	//Use hallo events to track modified status of editable
+	// Use hallo events to track modified status of editable
+	// Link multiple actions onto same class selector
 	var $modified = $('#modified');
-
 	$('.editable').bind('hallomodified', function(event, data) {
 		$modified.html("Editable has been modified"); //detects adding and deleting characters
 	}).bind('halloselected', function(event, data) {
@@ -79,14 +85,20 @@ $(function() {
 		$modified.html("Selection removed"); //detects un-highlighting
 	});
 
+	// 
 	$('.editable--spreadsheet').bind('hallodeactivated', function() { //why is this deactivated??
 		var $this = $(this),
 			html = $this.html();
-			//add $().tableToJSON() here to convert
+			// Add $().tableToJSON() here to convert
 	});
 
-	$('.add-editable').on('click', function() {
-		$('<div class="editable"></div>').insertBefore($(this)); 
-		//issue: new editables don't have event listeners, or class="editable"
+	// Click link to add new div with class="editable"
+	$('body').on('click', '.add-editable', function() {
+		$('<div class="editable"></div>').insertBefore($(this));
+		// Issue: new editables don't inherit/have event listeners
 	});
+	// Read: http://stackoverflow.com/questions/15090942/jquery-even-handler-not-working-on-dynamic-content
+	// http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements?lq=1
+	// http://api.jquery.com/on/#direct-and-delegated-events
+
 });
