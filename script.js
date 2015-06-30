@@ -61,7 +61,7 @@ $(function() { // Create plugins
 			});
 		},
 		// Extract duplicate plugin code to own method.
-		// Next, successfully call this from halloActivate and halloDeactivate
+		// Todo: successfully call this from halloActivate and halloDeactivate
 		halloShowToolbar: function(e) {
 			var $this = $(this);
 			$this.hallo({
@@ -92,7 +92,7 @@ $(function() { // Create plugins
 	// 	// how to deal with state? 
 	// });
 
-	// NOT WORKING - Double click on wrapper to deactivate all editables
+	// Not working: Double click on wrapper to deactivate all editables
 	$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($(this)));
 
 	// Use hallo events to track modified status of editable
@@ -106,20 +106,18 @@ $(function() { // Create plugins
 		$modified.html("Selection removed"); //detects un-highlighting
 	});
 
-	// 
-	$('.editable--spreadsheet').bind('hallodeactivated', function() { //why is this deactivated??
+	$('.editable--spreadsheet').bind('hallodeactivated', function() {
 		var $this = $(this),
 			html = $this.html();
 			// Add $().tableToJSON() here to convert
 	});
 
-	// Click link to add new div with class="editable"
+	// Click link to add new editable
 	$('body').on('click', '.add-editable', function() {
-		$('<div class="editable"></div>').insertBefore($(this));
+		$('<div class="editable"><p></p></div>').insertBefore($(this));
 		// Issue: new editables don't inherit/have event listeners
+		// http://stackoverflow.com/questions/15090942/jquery-even-handler-not-working-on-dynamic-content
+		// http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements?lq=1
+		// http://api.jquery.com/on/#direct-and-delegated-events
 	});
-	// Read: http://stackoverflow.com/questions/15090942/jquery-even-handler-not-working-on-dynamic-content
-	// http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements?lq=1
-	// http://api.jquery.com/on/#direct-and-delegated-events
-
 });
