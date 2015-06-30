@@ -9,7 +9,7 @@ $(function() { // Create plugins
 				$this.addClass('editable--active');
 				$this.hallo({
 					editable: true, //activate hallo editables
-					plugins: { //add basic editing toolbar (no icon images yet). Issue: Shows on first element, then "not found"
+					plugins: { //add basic editing toolbar (no icon images yet). Issue: Shows on first active editable, then "not found"
 						'halloformat': {
 							'bold': true,
 							'italic': true
@@ -38,7 +38,14 @@ $(function() { // Create plugins
 			var $this = $(this);
 			$this.removeClass('editable--active');
 			$this.hallo({
-				editable: false //deactive hallo editables
+				editable: false, //deactive hallo editables
+				plugins: {
+					'halloformat': {
+						'bold': true,
+						'italic': true
+					}
+				},
+				toolbar: 'halloToolbarFixed' //duplicate from above, but by adding again it shows up on all active editables
 			});
 			$this.trigger('hallodeactivated');
 		},
@@ -51,6 +58,20 @@ $(function() { // Create plugins
 				if ($(this)[0] !== $this[0]) {
 					$(this).halloDeactivate();
 				}
+			});
+		},
+		// Extract duplicate plugin code to own method.
+		// Next, successfully call this from halloActivate and halloDeactivate
+		halloShowToolbar: function(e) {
+			var $this = $(this);
+			$this.hallo({
+				plugins: {
+					'halloformat': {
+						'bold': true,
+						'italic': true
+					}
+				},
+				toolbar: 'halloToolbarFixed'
 			});
 		}
 	});
