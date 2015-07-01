@@ -1,0 +1,24 @@
+{
+  "name": "hallo-sandbox",
+  "version": "1.0.0",
+  "description": "Building a live text editor",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jessicamcinchak/hallo-sandbox.git"
+  },
+  "keywords": [],
+  "author": "Jessica McInchak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jessicamcinchak/hallo-sandbox/issues"
+  },
+  "homepage": "https://github.com/jessicamcinchak/hallo-sandbox",
+  "dependencies": {
+    "express": "^4.13.0"
+  }
+}
