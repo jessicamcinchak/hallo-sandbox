@@ -45,7 +45,7 @@ $(function() { // Create plugins
 						'italic': true
 					}
 				},
-				toolbar: 'halloToolbarFixed' //duplicate from above, but by adding again it shows up on all active editables
+				toolbar: 'halloToolbarFixed' //duplicated from above, but by adding again it shows up on all active editables
 			});
 			$this.trigger('hallodeactivated');
 		},
