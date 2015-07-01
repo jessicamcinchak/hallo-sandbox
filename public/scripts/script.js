@@ -120,4 +120,23 @@ $(function() { // Create plugins
 		// http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements?lq=1
 		// http://api.jquery.com/on/#direct-and-delegated-events
 	});
+
+	// Extract HTML content from all editable divs
+	// Todo: Move this function into plugins
+	function downloadInnerHtml(filename, elId, mimeType) {
+	    var elHtml = document.getElementById(elId).innerHTML;
+	    var link = document.createElement('a');
+	    mimeType = mimeType || 'text/plain';
+
+	    link.setAttribute('download', filename);
+	    link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
+	    link.click(); 
+	};
+
+	// Click link to save contents of all editables within the wrapper to a file
+	var fileName = 'test.html';
+	$('.save-editables').click(function(){
+    downloadInnerHtml(fileName, 'main','text/html');
+	});
+
 });

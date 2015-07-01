@@ -1,4 +1,5 @@
-var express = require('express');
+var express = require('express'),
+	fs = require('fs');
 
 var server = express();
 server.use(express.static(__dirname + '/public'));
@@ -7,6 +8,8 @@ var port = 10001;
 server.listen(port, function() {
 	console.log('server listening on port ' + port);
 });
+
+// //Original simple HTTP server using plain node
 
 // var http = require('http'),
 // 	fs = require('fs'),
@@ -30,7 +33,7 @@ server.listen(port, function() {
 // });
 
 // //Write a file
-// fs.writeFile('something.txt', 'Node was here', function(error) {
+// fs.writeFile('/public/temp/test.txt', 'It works, function(error) {
 // 	if (error) {
 // 		console.log('Failed to write file:', error);
 // 	} else {

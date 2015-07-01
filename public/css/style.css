@@ -41,14 +41,14 @@ td {
 
 a {
 	width: 150px;
-	display: block;
+	display: inline-block;
 	margin: auto;
 	color: white;
 	background-color: #443094;
 	border-radius: 5px;
 	border: 1px solid #443094;
 	text-align: center;
-	padding: 20px;
+	padding: 10px;
 	text-decoration: none;
 	opacity: 1;
 	font-size: 16px;
