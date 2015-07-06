@@ -1,7 +1,7 @@
 var config = {
-	baseClass = "test",
-	elementClassFragment = "__",
-	modifierClassFragment = "--"
+	baseClass: "test",
+	elementClassFragment: "__",
+	modifierClassFragment: "--"
 };
 
 $(function() {
