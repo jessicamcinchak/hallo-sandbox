@@ -10,7 +10,7 @@ body {
 	padding: 50px;
 	margin: auto;
 	border-radius: 15px;
-/*	border: 1px solid #443094;*/
+	border: 1px solid #443094;
 	background-color: #f0f0f0;
 }
 
@@ -29,10 +29,11 @@ body {
 
 table {
 	margin: auto;
+	padding: 3px;
 }
 
 td, tr { 
-	padding: 3px; 
+	padding: 5px; 
 }
 
 td {
@@ -56,6 +57,10 @@ a {
 
 a:hover { 
 	opacity: .6;
+}
+
+h1, h2, p {
+	padding: 3px;
 }
 
 h1 {
