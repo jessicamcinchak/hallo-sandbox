@@ -18,6 +18,7 @@ $(function() {
 					},
 					toolbar: 'halloToolbarFixed'
 				});
+				// $this.halloShowToolbar();
 				$modified.html("Editable is active");
 			}
 			if (options.deactivateSiblings) { 
@@ -48,6 +49,7 @@ $(function() {
 				},
 				toolbar: 'halloToolbarFixed' //duplicated from above, but by adding again it shows up on all active editables
 			});
+			// $this.halloShowToolbar();
 			$this.trigger('hallodeactivated');
 		},
 		// When you activate a new element, deactive previously active element
@@ -77,3 +79,14 @@ $(function() {
 		}
 	});
 });
+
+// Extract HTML content from all editable divs
+// Todo: Should this helper function be a plugin method instead?
+function downloadInnerHtml(filename, elId, mimeType) {
+    var elHtml = document.getElementById(elId).innerHTML;
+    var link = document.createElement('a');
+    mimeType = mimeType || 'text/plain';
+    link.setAttribute('download', filename);
+    link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
+    link.click(); 
+};

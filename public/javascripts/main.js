@@ -1,23 +1,9 @@
 $(function() {
-	
+	// Active editable by activating closest editable parent
 	$('.editable').on('click', $.fn.halloActivateClosestEditableParent.bind($(this)));
 
-	// // Future use - introduce react classes for hallo editables
-	// React.createClass({
-	// 	componentDidMount: function() {
-	// 		$this = React.findDOMNode(this);
-	// 		this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
-	// 		$this.on('click', this.clickCallback);
-	// 	},
-	// 	componentWillUnmount: function() {
-	// 		$this.off('click');
-	// 	},
-	// 	render: function() {} //this should return div
-	// 	// how to deal with state? 
-	// });
-
-	// Not working: Double click on wrapper to deactivate all editables
-	$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($(this)));
+	// Double click on wrapper to deactivate all editables
+	$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
 
 	// Use hallo events to track modified status of editable
 	// Link multiple actions onto same class selector
@@ -30,6 +16,7 @@ $(function() {
 		$modified.html("Selection removed"); //detects un-highlighting
 	});
 
+	// Paste csv data into editable, save out as JSON
 	$('.editable--spreadsheet').bind('hallodeactivated', function() {
 		var $this = $(this),
 			html = $this.html();
@@ -45,22 +32,24 @@ $(function() {
 		// http://api.jquery.com/on/#direct-and-delegated-events
 	});
 
-	// Extract HTML content from all editable divs
-	// Todo: Move this function into plugins
-	function downloadInnerHtml(filename, elId, mimeType) {
-	    var elHtml = document.getElementById(elId).innerHTML;
-	    var link = document.createElement('a');
-	    mimeType = mimeType || 'text/plain';
-
-	    link.setAttribute('download', filename);
-	    link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
-	    link.click(); 
-	};
-
 	// Click link to save contents of all editables within the wrapper to a file
 	var fileName = 'test.html';
 	$('.save-editables').click(function(){
-    downloadInnerHtml(fileName, 'main','text/html');
+    	downloadInnerHtml(fileName, 'main','text/html');
 	});
+
+	// // Future use - introduce react classes for hallo editables
+	// React.createClass({
+	// 	componentDidMount: function() {
+	// 		$this = React.findDOMNode(this);
+	// 		this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
+	// 		$this.on('click', this.clickCallback);
+	// 	},
+	// 	componentWillUnmount: function() {
+	// 		$this.off('click');
+	// 	},
+	// 	render: function() {} //this should return div
+	// 	// how to deal with state? 
+	// });
 
 });
