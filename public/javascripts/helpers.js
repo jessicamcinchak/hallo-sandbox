@@ -1,6 +1,6 @@
 //jQuery plugins and helper functions
 $(function() {
-	$.fn.extend({ // Extend jQuery prototype ($.fn) object to provide new methods that can be chained to the jQuery() function
+	$.fn.extend({ // $.fn extends jQuery prototype object with new methods that can be chained to the jQuery() function
 		halloActivate: function(options) {
 			options = options || {};
 			var $this = $(this),
@@ -26,7 +26,7 @@ $(function() {
 			}
 		},
 		// Find and activate closest editable parent element
-		// E.g. click on a paragraph and activate the outer div
+		// E.g. click on a paragraph and activate the whole outer div
 		halloActivateClosestEditableParent: function(e) {
 			var $this = $(this),
 				$target = $(e.target),
@@ -52,8 +52,7 @@ $(function() {
 			// $this.halloShowToolbar();
 			$this.trigger('hallodeactivated');
 		},
-		// When you activate a new element, deactive previously active element
-		// Only one editable should be active at a time
+		// When you activate a new element, deactivate previously active element
 		halloDeactivateSiblings: function(e) {
 			var $this = $(this),
 				$parent = $this.parent();

@@ -1,5 +1,11 @@
+var config = {
+	baseClass = "test",
+	elementClassFragment = "__",
+	modifierClassFragment = "--"
+};
+
 $(function() {
-	// Active editable by activating closest editable parent
+	// Activate editable on click by activating closest editable parent
 	$('.editable').on('click', $.fn.halloActivateClosestEditableParent.bind($(this)));
 
 	// Double click on wrapper to deactivate all editables
@@ -51,5 +57,4 @@ $(function() {
 	// 	render: function() {} //this should return div
 	// 	// how to deal with state? 
 	// });
-
 });
