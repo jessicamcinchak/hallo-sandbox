@@ -7,9 +7,8 @@ body {
 .wrapper {
 	width: 90%;
 	max-width: 800px;
-	padding: 50px;
+	padding: 40px;
 	margin: auto;
-	border-radius: 15px;
 	border: 1px solid #443094;
 	background-color: #f0f0f0;
 }
@@ -19,7 +18,6 @@ body {
 	cursor: pointer;
 	margin: 35px auto;
 	padding: 10px;
-	border-radius: 8px;
 	background-color: #f7f7f7;
 }
 
@@ -41,18 +39,22 @@ td {
 }
 
 a {
-	width: 150px;
-	display: inline-block;
-	margin: auto;
+	display: block;
+	position: relative;
+	width: 45%;
+	max-width: 800px;
+	margin: 10px auto;
+	padding: 10px;
 	color: white;
 	background-color: #443094;
-	border-radius: 5px;
 	border: 1px solid #443094;
 	text-align: center;
-	padding: 10px;
 	text-decoration: none;
 	opacity: 1;
+	font-family: inherit;
 	font-size: 16px;
+	font-weight: 100;
+	cursor: pointer;
 }
 
 a:hover { 
