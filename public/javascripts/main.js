@@ -8,9 +8,6 @@ $(function() {
 	// Activate editable on click by activating closest editable parent
 	$('.editable').on('click', $.fn.halloActivateClosestEditableParent.bind($(this)));
 
-	// Double click on wrapper to deactivate all editables
-	$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
-
 	// Use hallo events to track modified status of editable
 	// Link multiple actions onto same class selector
 	var $modified = $('#modified');
@@ -37,6 +34,9 @@ $(function() {
 		// http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements?lq=1
 		// http://api.jquery.com/on/#direct-and-delegated-events
 	});
+
+	// Double click on wrapper to deactivate all editables
+	$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
 
 	// Click link to save contents of all editables within the wrapper to a file
 	var fileName = 'test.html';
