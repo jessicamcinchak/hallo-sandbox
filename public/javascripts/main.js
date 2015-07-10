@@ -28,11 +28,10 @@ $(function() {
 
 	// Click link to add new editable
 	$('body').on('click', '.add-editable', function() {
-		$('<div class="editable"><p></p></div>').insertBefore($(this));
-		// Issue: new editables don't inherit/have event listeners
-		// http://stackoverflow.com/questions/15090942/jquery-even-handler-not-working-on-dynamic-content
-		// http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements?lq=1
-		// http://api.jquery.com/on/#direct-and-delegated-events
+		var $editable = $('<div class="editable"><p></p></div>');
+		$editable.insertBefore($(this));
+		// Apply hallo event listeners to newly added elements
+		$editable.on('click', $.fn.halloActivateClosestEditableParent.bind($(this)));
 	});
 
 	// Double click on wrapper to deactivate all editables
