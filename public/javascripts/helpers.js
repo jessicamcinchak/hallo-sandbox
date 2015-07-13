@@ -80,7 +80,6 @@ $(function() {
 });
 
 // Extract HTML content from all editable divs
-// Todo: Should this helper function be a plugin method instead?
 function downloadInnerHtml(filename, elId, mimeType) {
     var elHtml = document.getElementById(elId).innerHTML;
     var link = document.createElement('a');
