@@ -1,6 +1,11 @@
-//jQuery plugins and helper functions
+/** jQuery plugins and helper functions */
 $(function() {
-	$.fn.extend({ // $.fn extends jQuery prototype object with new methods that can be chained to the jQuery() function
+	$.fn.extend({ // '$.fn' extends jQuery prototype object with new methods that can be chained to the jQuery() function
+		
+		/**
+		 * Activate editable
+		 * @param {object} options - Options object with key 'event'
+		 */
 		halloActivate: function(options) {
 			options = options || {};
 			var $this = $(this),
@@ -25,8 +30,11 @@ $(function() {
 				$this.halloDeactivateSiblings(); 
 			}
 		},
-		// Find and activate closest editable parent element
-		// E.g. click on a paragraph and activate the whole outer div
+
+		/**
+		 * Find and activate closest editable parent element. E.g. click on a paragraph and activate the whole outer div
+		 * @param {event} e
+		 */
 		halloActivateClosestEditableParent: function(e) {
 			var $this = $(this),
 				$target = $(e.target),
@@ -36,6 +44,11 @@ $(function() {
 				deactivateSiblings: true 
 			});
 		},
+
+		/**
+		 * Deactivate editable
+		 * @param {event} e
+		 */
 		halloDeactivate: function(e) {
 			var $this = $(this);
 			$this.removeClass('editable--active');
@@ -52,7 +65,11 @@ $(function() {
 			// $this.halloShowToolbar();
 			$this.trigger('hallodeactivated');
 		},
-		// When you activate a new element, deactivate previously active element
+
+		/** 
+		* Deactivate previously active element when you activate a new element
+		* @param {event} e
+		*/
 		halloDeactivateSiblings: function(e) {
 			var $this = $(this),
 				$parent = $this.parent();
@@ -62,8 +79,12 @@ $(function() {
 				}
 			});
 		},
-		// Extract duplicate plugin code to own method.
-		// Todo: successfully call this from halloActivate and halloDeactivate
+
+		/**
+		 * TODO: successfully call this from halloActivate and halloDeactivate
+		 * Extract duplicate plugin code to display formatting toolbar to own method
+		 * @param {event} e
+		 */
 		halloShowToolbar: function(e) {
 			var $this = $(this);
 			$this.hallo({
@@ -76,10 +97,16 @@ $(function() {
 				toolbar: 'halloToolbarFixed'
 			});
 		}
+		
 	});
 });
 
-// Extract HTML content from all editable divs
+/** 
+ * Extract HTML content from all editable divs for downloading/saving
+ * @param {string} filename
+ * @param {string} elId
+ * @param {string} mimeType
+ */
 function downloadInnerHtml(filename, elId, mimeType) {
     var elHtml = document.getElementById(elId).innerHTML;
     var link = document.createElement('a');
