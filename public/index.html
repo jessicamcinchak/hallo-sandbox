@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+
 		<meta charset="utf-8" />
 		<title>Hallo sandbox</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -11,18 +12,22 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react.js"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/JSXTransformer.js"></script>
 		
-		<!-- Add backbone -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script>
+    	<!-- Add backbone -->
+<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script> -->
+		
 		<script src="dist/hallo.js"></script>
 		<script src="dist/jquery.tabletojson.js"></script>
 		
 		<link rel="stylesheet" type="text/css" href="css/style.css">
+
 	</head>
 	<body>
+
+		<script type="text/jsx;harmony=true" src="javascripts/editable-wrapper.jsx"></script>
 		<script src="javascripts/helpers.js"></script>
 		<script src="javascripts/main.js"></script>
 
-		<div class='wrapper' id="main">
+		<div class="wrapper" id="main">
 
 			<p id="modified">Editables have not been modified</p>
 
@@ -38,7 +43,7 @@
 				</p>
 			</div>
 
-			<div class="editable editable--spreadsheet">
+			<div class="editable">
 				<table>
 					<th>
 						<td>2000</td>
@@ -66,5 +71,6 @@
 			<a href="#" class="save-editables">Save Editables</a>
 
 		</div>
+
 	</body>
 </html>
