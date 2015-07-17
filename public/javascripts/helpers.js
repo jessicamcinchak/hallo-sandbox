@@ -113,5 +113,5 @@ function downloadInnerHtml(filename, elId, mimeType) {
     mimeType = mimeType || 'text/plain';
     link.setAttribute('download', filename);
     link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
-    link.click(); 
+    link.click();
 };

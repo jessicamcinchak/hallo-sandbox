@@ -32,6 +32,24 @@ var Editable = React.createClass({
 	}
 });
 
+/** Child component. Link that adds a new editable, inheriting all behavior from Editable */
+var AddEditable = React.createClass({
+	render: function() {
+		return (
+			<a href="#" class="add-editable">Add Editable</a>
+		);
+	}
+});
+
+/** Child component. Link that saves all editables, writes out formatted inner html */
+var SaveEditables = React.createClass({
+	render: function() {
+		return (
+			<a href="#" class="save-editables">Save Editables</a>
+		);
+	}
+});
+
 React.render(
 	<EditableWrapper />
 	document.getElementById('main')
