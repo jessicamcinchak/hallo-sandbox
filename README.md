@@ -1,6 +1,6 @@
 # hallo-sandbox
 
-Prototyping a live content editing interface using Hallo.js. 
+Renders a list of editable html elements as React components using Hallo's live content editor.
 
 # Dev
 
