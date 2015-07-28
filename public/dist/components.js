@@ -25,16 +25,24 @@ var EditableList = (function (_React$Component) {
 	/** Child component. Editable divs that display in a list. E.g. headers, paragraphs, tables */
 
 	_createClass(EditableList, [{
-		key: "renderEditableList",
-		value: function renderEditableList() {
+		key: "render",
+		value: function render() {
+			return React.createElement("div", { className: "wrapper", id: "main" }, React.createElement(Modified, null), this.renderList(), React.createElement("a", { href: "#", className: "add-editable", onClick: this.addEditable.bind(this) }, " Add Editable "), React.createElement("a", { href: "#", className: "save-editables", onClick: this.saveEditables.bind(this) }, " Save Editables "));
+		}
+	}, {
+		key: "renderList",
+		value: function renderList() {
+			var _this = this;
+
 			return this.props.contentList.map(function (content, i) {
-				return React.createElement(Editable, { key: 'editable-' + i, content: content });
+				return React.createElement(Editable, { key: 'editable-' + i, content: content, communicate: _this.handleChildStuff.bind(_this) });
 			});
 		}
 	}, {
-		key: "render",
-		value: function render() {
-			return React.createElement("div", { className: "wrapper", id: "main" }, this.renderEditableList(), React.createElement("a", { href: "#", className: "add-editable", onClick: this.addEditable.bind(this) }, "Add Editable"), React.createElement("a", { href: "#", className: "save-editables", onClick: this.saveEditables.bind(this) }, "Save Editables"));
+		key: "handleChildStuff",
+		value: function handleChildStuff() {
+			console.log('handling');
+			this.props.content = 'something';
 		}
 	}, {
 		key: "addEditable",
@@ -46,13 +54,15 @@ var EditableList = (function (_React$Component) {
 		key: "saveEditables",
 		value: function saveEditables() {
 			var fileName = 'test.html';
-			$('.save-editables').click(function () {
+			$('.save-editables').on('click', function () {
 				downloadInnerHtml(fileName, 'main', 'text/html');
 			});
 		}
 	}, {
 		key: "componentDidMount",
-		value: function componentDidMount() {}
+		value: function componentDidMount() {
+			$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
+		}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {}
@@ -70,29 +80,80 @@ var Editable = (function (_React$Component2) {
 		_get(Object.getPrototypeOf(Editable.prototype), "constructor", this).apply(this, arguments);
 	}
 
+	/** Child component. Tracks modified status of Editables by binding multiple hallo events onto the same class selector */
+	/** TODO: Track modified status of newly added fields */
+
 	_createClass(Editable, [{
+		key: "render",
+		value: function render() {
+			return React.createElement("div", { className: "editable" }, React.createElement("div", { className: "editable__content" }, this.props.content), React.createElement("div", { className: "editable__controls" }));
+		}
+	}, {
 		key: "componentDidMount",
 		value: function componentDidMount() {
+			var _this2 = this;
+
+			console.log(this);
 			var $this = $(React.findDOMNode(this));
 			$this.halloActivate();
 			this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 			$this.on('click', this.clickCallback);
+			$this.on('hallomodified', function (event, data) {
+				_this2.props.communicate();
+				_this2.setState({ 'content': 'something' }); // Should only call on root component, not child. Also not available on ES6 class components.
+				// this.props.content = 'something';
+			});
 		}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {
 			var $this = $(React.findDOMNode(this));
 			$this.off('click');
+			$this.off('hallomodified');
 			$this.halloDeactivate();
 		}
-	}, {
-		key: "render",
-		value: function render() {
-			return React.createElement("div", { className: "editable" }, React.createElement("div", { className: "editable__content" }, this.props.content), React.createElement("div", { className: "editable__controls" }));
-		}
+
+		// shouldComponentUpdate(newProps) {
+		// 	// if this.props.content has changed, do not trigger update - hallo is already doing this
+		// }
+
 	}]);
 
 	return Editable;
+})(React.Component);
+
+var Modified = (function (_React$Component3) {
+	_inherits(Modified, _React$Component3);
+
+	function Modified() {
+		_classCallCheck(this, Modified);
+
+		_get(Object.getPrototypeOf(Modified.prototype), "constructor", this).apply(this, arguments);
+	}
+
+	_createClass(Modified, [{
+		key: "render",
+		value: function render() {
+			return React.createElement("p", { className: "modified" }, "Editables have not been modified");
+		}
+	}, {
+		key: "componentDidMount",
+		value: function componentDidMount() {
+			// var $modified = $('.modified');
+			// $('.editable').bind('hallomodified', function(event, data) {
+			// 	$modified.html("Editable has been modified"); //detects adding and deleting characters
+			// }).bind('halloselected', function(event, data) {
+			// 	$modified.html("Selection made"); //detects highlighting
+			// }).bind('hallounselected', function(event, data) {
+			// 	$modified.html("Selection removed"); //detects un-highlighting
+			// });
+		}
+	}, {
+		key: "componentWillUnmount",
+		value: function componentWillUnmount() {}
+	}]);
+
+	return Modified;
 })(React.Component);
 
 React.render(React.createElement(EditableList, { contentList: [1, 2, 3] }), document.body);

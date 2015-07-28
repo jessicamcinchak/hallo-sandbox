@@ -97,7 +97,6 @@ $(function() {
 				toolbar: 'halloToolbarFixed'
 			});
 		}
-		
 	});
 });
 
