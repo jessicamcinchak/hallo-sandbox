@@ -1,55 +1,65 @@
-/** 
+/**
  * @jsx React.DOM
  */
 
-/** Top level component. Main wrapper that holds all editable components */
-var EditableList = React.createClass({
-	renderEditableList: function() {
+/** Top level component. Main wrapper that holds a list of all editable components */
+class EditableList extends React.Component {
+
+	renderEditableList() {
 		return this.props.contentList.map(function(content, i) {
 			return (
 				<Editable key={'editable-' + i} content={content} />
 			);
 		});
-	},
-	render: function() {
+	}
+
+	render() {
 		return (
 			<div className='wrapper' id='main'>
 				{this.renderEditableList()}
-				<a href="#" className="add-editable" onClick={this.addEditable} >Add Editable</a>
+				<a href="#" className="add-editable" onClick={this.addEditable.bind(this)} >Add Editable</a>
+				<a href="#" className="save-editables" onClick={this.saveEditables.bind(this)}>Save Editables</a>
 			</div>
 		);
-	},
-
-	addEditable: function() {
-		this.props.contentList.push('New Field');
-		this.forceUpdate();
-	},
-
-	componentDidMount: function() {
-	},
-
-	componentWillUnmount: function() {
 	}
 
-});
+	addEditable() {
+		this.props.contentList.push('New Field');
+		this.forceUpdate();
+	}
+
+	saveEditables() {
+		var fileName = 'test.html';
+		$('.save-editables').click(function() {
+			downloadInnerHtml(fileName, 'main','text/html');
+		})
+	}
+
+	componentDidMount() {
+	}
+
+	componentWillUnmount() {
+	}
+
+}
 
 /** Child component. Editable divs that display in a list. E.g. headers, paragraphs, tables */
-var Editable = React.createClass({
+class Editable extends React.Component {
 
-	componentDidMount: function() {
-		$this = $(React.findDOMNode(this));
+	componentDidMount() {
+		var $this = $(React.findDOMNode(this));
 		$this.halloActivate();
 		this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 		$this.on('click', this.clickCallback);
-	},
+	}
 
-	componentWillUnmount: function() {
-		$this = $(React.findDOMNode(this));
+	componentWillUnmount() {
+		var $this = $(React.findDOMNode(this));
 		$this.off('click');
 		$this.halloDeactivate();
-	},
+	}
 
-	render: function() {
+	render() {
 		return (
 			<div className='editable'>
 				<div className='editable__content'>
@@ -61,23 +71,9 @@ var Editable = React.createClass({
 		);
 	}
 
-});
+}
 
 React.render(
  	<EditableList contentList={[1, 2, 3]} />,
  	document.body
 );
-
-	// // Future use - introduce react classes for hallo editables
-	// React.createClass({
-	// 	componentDidMount: function() {
-	// 		$this = React.findDOMNode(this);
-	// 		this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
-	// 		$this.on('click', this.clickCallback);
-	// 	},
-	// 	componentWillUnmount: function() {
-	// 		$this.off('click');
-	// 	},
-	// 	render: function() {} //this should return div
-	// 	// how to deal with state? 
-	// });

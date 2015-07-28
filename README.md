@@ -2,7 +2,7 @@
 
 Renders a list of editable html elements as React components using Hallo's live content editor.
 
-# Dev
+## Dev
 
 Requires Node v0.10.0 or newer.
 
@@ -10,3 +10,7 @@ Requires Node v0.10.0 or newer.
 	cd REPO
 	npm install
 	node server.js
+
+## Lessons Learned
+
+* onClick callbacks need to be explicitly bound if written in ES6.

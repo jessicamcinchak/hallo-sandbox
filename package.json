@@ -1,8 +1,20 @@
 {
   "name": "hallo-sandbox",
   "version": "1.0.0",
-  "description": "Building a live text editor",
-  "main": "script.js",
+  "description": "Renders a list of editable html elements as React components using Hallo's live content editor.",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "browserify": "^11.0.0",
+    "babelify": "^6.1.3",
+    "express": "^4.13.0",
+    "gulp": "^3.9.0",
+    "react": "^0.13.0-rc2",
+    "gulp-react": "^3.0.1",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {
+    "gulp-babel": "^5.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -11,14 +23,10 @@
     "type": "git",
     "url": "https://github.com/jessicamcinchak/hallo-sandbox.git"
   },
-  "keywords": [],
-  "author": "Jessica McInchak",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jessicamcinchak/hallo-sandbox/issues"
   },
-  "homepage": "https://github.com/jessicamcinchak/hallo-sandbox",
-  "dependencies": {
-    "express": "^4.13.0"
-  }
+  "homepage": "https://github.com/jessicamcinchak/hallo-sandbox"
 }

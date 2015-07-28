@@ -9,8 +9,7 @@ server.listen(port, function() {
 	console.log('server listening on port ' + port);
 });
 
-// //Original simple HTTP server using plain node
-
+/** Original simple HTTP server using plain node */
 // var http = require('http'),
 // 	fs = require('fs'),
 // 	url = require('url');
