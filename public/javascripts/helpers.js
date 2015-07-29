@@ -23,7 +23,6 @@ $(function() {
 					},
 					toolbar: 'halloToolbarFixed'
 				});
-				// $this.halloShowToolbar();
 				$modified.html("Editable is active");
 			}
 			if (options.deactivateSiblings) { 
@@ -60,9 +59,8 @@ $(function() {
 						'italic': true
 					}
 				},
-				toolbar: 'halloToolbarFixed' //duplicated from above, but by adding again it shows up on all active editables
+				toolbar: 'halloToolbarFixed' //repeated here to show beyond first activated editable
 			});
-			// $this.halloShowToolbar();
 			$this.trigger('hallodeactivated');
 		},
 
@@ -78,39 +76,6 @@ $(function() {
 					$(this).halloDeactivate();
 				}
 			});
-		},
-
-		/**
-		 * TODO: successfully call this from halloActivate and halloDeactivate
-		 * Extract duplicate plugin code to display formatting toolbar to own method
-		 * @param {event} e
-		 */
-		halloShowToolbar: function(e) {
-			var $this = $(this);
-			$this.hallo({
-				plugins: {
-					'halloformat': {
-						'bold': true,
-						'italic': true
-					}
-				},
-				toolbar: 'halloToolbarFixed'
-			});
 		}
 	});
 });
-
-/** 
- * Extract HTML content from all editable divs for downloading/saving
- * @param {string} filename
- * @param {string} elId
- * @param {string} mimeType
- */
-function downloadInnerHtml(filename, elId, mimeType) {
-    var elHtml = document.getElementById(elId).innerHTML;
-    var link = document.createElement('a');
-    mimeType = mimeType || 'text/plain';
-    link.setAttribute('download', filename);
-    link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
-    link.click(); 
-};

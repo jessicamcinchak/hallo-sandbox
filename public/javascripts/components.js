@@ -2,7 +2,9 @@
  * @jsx React.DOM
  */
 
-/** Top level component. Main wrapper that holds a list of all editable components */
+/** Top level component. 
+ * Main wrapper that holds a list of editable components 
+ */
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -19,24 +21,29 @@ var EditableList = (function (_React$Component) {
 	_createClass(EditableList, [{
 		key: "render",
 		value: function render() {
-			return React.createElement("div", { className: "wrapper", id: "main" }, React.createElement(Modified, null), this.renderList(), React.createElement("a", { href: "#", className: "add-editable", onClick: this.addEditable.bind(this) }, " Add Editable "), React.createElement("a", { href: "#", className: "save-editables", onClick: this.saveEditables.bind(this) }, " Save Editables "));
+			return React.createElement("div", { className: "wrapper", id: "main" }, React.createElement(Modified, { statusText: this.state.statusText }), this.renderList(), React.createElement("a", { href: "#", className: "add-editable", onClick: this.addEditable.bind(this) }, " Add Editable "), React.createElement("a", { href: "#", className: "save-editables", onClick: this.saveEditables.bind(this) }, " Save Editables "));
 		}
 
-		/** Replaces getInitialState when using ES6 classes */
+		/* Set state. (Constructor replaces getInitialState when using ES6 classes) */
 	}]);
 
 	function EditableList() {
 		_classCallCheck(this, EditableList);
 
-		_get(Object.getPrototypeOf(EditableList.prototype), "constructor", this).call(this); //this is new
-		this.state = { editables: [{
-				content: '',
+		_get(Object.getPrototypeOf(EditableList.prototype), "constructor", this).call(this);
+		this.state = {
+			statusText: 'Welcome! Editables have not been modified yet.',
+			editables: [{
+				content: '<p>New Field</p>',
+				type: '',
 				halloState: ''
 			}]
 		};
 	}
 
-	/** Child component. Editable divs that display in a list. E.g. headers, paragraphs, tables */
+	/** Child component. 
+  * Editable divs that display in a list. E.g. headers, paragraphs, tables
+  */
 
 	_createClass(EditableList, [{
 		key: "renderList",
@@ -44,15 +51,14 @@ var EditableList = (function (_React$Component) {
 			var _this = this;
 
 			return this.state.editables.map(function (editable, i) {
-				return React.createElement(Editable, { key: 'editable-' + i, editable: editable, communicate: _this.handleChildStuff.bind(_this) });
+				return React.createElement(Editable, { key: 'editable-' + i, editable: editable, callParent: _this.handleChildModifications.bind(_this) });
 			});
 		}
 	}, {
-		key: "handleChildStuff",
-		value: function handleChildStuff() {
-			console.log('handling'); //communicating
-			this.props.content = 'anything'; //how to dynamically set this to read new edits?
-			console.log(this); //sets 'anything' as this.props.content
+		key: "handleChildModifications",
+		value: function handleChildModifications(status) {
+			this.state.statusText = status;
+			this.forceUpdate();
 		}
 	}, {
 		key: "addEditable",
@@ -63,16 +69,15 @@ var EditableList = (function (_React$Component) {
 	}, {
 		key: "saveEditables",
 		value: function saveEditables() {
-			var fileName = 'test.html';
-			$('.save-editables').on('click', function () {
-				downloadInnerHtml(fileName, 'main', 'text/html');
+			var downloadContent = this.state.editables.map(function (editable) {
+				return editable.content;
 			});
+			console.log(downloadContent.join(' -- '));
+			//later introduce node/express here to send via server?
 		}
 	}, {
 		key: "componentDidMount",
-		value: function componentDidMount() {
-			$('.wrapper').on('dblclick', function () {});
-		}
+		value: function componentDidMount() {}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {}
@@ -90,12 +95,14 @@ var Editable = (function (_React$Component2) {
 		_get(Object.getPrototypeOf(Editable.prototype), "constructor", this).apply(this, arguments);
 	}
 
-	/** Child component. Tracks modified status of Editables by binding multiple hallo events onto the same class selector */
+	/** Child component.
+  * Tracks modified status of Editables by binding multiple hallo events onto the same class selector.
+  */
 
 	_createClass(Editable, [{
 		key: "render",
 		value: function render() {
-			return React.createElement("div", { className: "editable" }, React.createElement("div", { className: "editable__content" }, this.props.editable.content), React.createElement("div", { className: "editable__controls" }));
+			return React.createElement("div", { className: "editable" }, React.createElement("div", { className: "editable__content", dangerouslySetInnerHTML: { __html: this.props.editable.content } }), React.createElement("div", { className: "editable__controls" }));
 		}
 	}, {
 		key: "componentDidMount",
@@ -104,27 +111,29 @@ var Editable = (function (_React$Component2) {
 
 			var $this = $(React.findDOMNode(this));
 
-			/** Activate */
+			/** Activate an editable */
 			$this.halloActivate();
+
 			this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 			$this.on('click', this.clickCallback);
 
-			/** Track modified status */
+			/** Track the modified status by tapping onto Hallo events */
 			$this.on('hallomodified', function (event, data) {
-				_this2.props.communicate();
-				_this2.setState({ 'content': 'something' });
-				$('.modified').html("Editable has been modified");
-			});
-			$this.on('halloselected', function (event, data) {
-				_this2.props.communicate();
-				$('.modified').html("Selection made");
-			});
-			$this.on('hallounselected', function (event, data) {
-				_this2.props.communicate();
-				$('.modified').html("Selection removed");
+				// console.log(data.content);
+				var content = $(data.content).html();
+				_this2.props.editable.content = content;
+				_this2.props.callParent('Editable has been modified');
 			});
 
-			/** Deactivate all editables by double clicking on wrapper */
+			$this.on('halloselected', function (event, data) {
+				_this2.props.callParent("Selection made");
+			});
+
+			$this.on('hallounselected', function (event, data) {
+				_this2.props.callParent("Selection removed");
+			});
+
+			/** Deactivate all editables by double clicking on the wrapper */
 			$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($this));
 		}
 	}, {
@@ -140,11 +149,6 @@ var Editable = (function (_React$Component2) {
 			$this.off('hallounselected');
 			$this.halloDeactivate();
 		}
-
-		// shouldComponentUpdate(newProps) {
-		// 	// if this.props.content has changed, do not trigger update - hallo is already doing this
-		// }
-
 	}]);
 
 	return Editable;
@@ -159,10 +163,12 @@ var Modified = (function (_React$Component3) {
 		_get(Object.getPrototypeOf(Modified.prototype), "constructor", this).apply(this, arguments);
 	}
 
+	/** Render React component tree */
+
 	_createClass(Modified, [{
 		key: "render",
 		value: function render() {
-			return React.createElement("p", { className: "modified" }, "Editables have not been modified");
+			return React.createElement("p", { className: "modified" }, this.props.statusText);
 		}
 	}, {
 		key: "componentDidMount",

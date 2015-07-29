@@ -2,13 +2,15 @@
  * @jsx React.DOM
  */
 
-/** Top level component. Main wrapper that holds a list of all editable components */
+/** Top level component. 
+ * Main wrapper that holds a list of editable components 
+ */
 class EditableList extends React.Component {
 
 	render() {
 		return (
 			<div className='wrapper' id='main'>
-				<Modified />
+				<Modified statusText={this.state.statusText} />
 				{this.renderList()}
 				<a href="#" className="add-editable" onClick={this.addEditable.bind(this)}> Add Editable </a>
 				<a href="#" className="save-editables" onClick={this.saveEditables.bind(this)}> Save Editables </a>
@@ -16,12 +18,15 @@ class EditableList extends React.Component {
 		);
 	}
 
-	/** Replaces getInitialState when using ES6 classes */
+	/* Set state. (Constructor replaces getInitialState when using ES6 classes) */
 	constructor() {
-		super(); //this is new
-		this.state = { editables: [
+		super();
+		this.state = {
+			statusText: 'Welcome! Editables have not been modified yet.',
+			editables: [
 				{
-					content: '',
+					content: '<p>New Field</p>',
+					type: '',
 					halloState: ''
 				}
 			]
@@ -31,15 +36,14 @@ class EditableList extends React.Component {
 	renderList() {
 		return this.state.editables.map((editable, i) => {
 			return (
-				<Editable key={'editable-' + i} editable={editable} communicate={this.handleChildStuff.bind(this)} />
+				<Editable key={'editable-' + i} editable={editable} callParent={this.handleChildModifications.bind(this)} />
 			);
 		});
 	}
 
-	handleChildStuff() {
-		console.log('handling'); //communicating
-		this.props.content = 'anything'; //how to dynamically set this to read new edits?
-		console.log(this); //sets 'anything' as this.props.content
+	handleChildModifications(status) {
+		this.state.statusText = status;
+		this.forceUpdate();
 	}
 
 	addEditable() {
@@ -48,16 +52,14 @@ class EditableList extends React.Component {
 	}
 
 	saveEditables() {
-		var fileName = 'test.html';
-		$('.save-editables').on('click', function() {
-			downloadInnerHtml(fileName, 'main','text/html');
-		})
+		var downloadContent = this.state.editables.map(function(editable) {
+			return editable.content;
+		});
+		console.log(downloadContent.join(' -- '));
+		//later introduce node/express here to send via server?
 	}
 
 	componentDidMount() {
-		$('.wrapper').on('dblclick', () => {
-
-		});
 	}
 
 	componentWillUnmount() {
@@ -65,15 +67,15 @@ class EditableList extends React.Component {
 
 }
 
-/** Child component. Editable divs that display in a list. E.g. headers, paragraphs, tables */
+/** Child component. 
+ * Editable divs that display in a list. E.g. headers, paragraphs, tables
+ */
 class Editable extends React.Component {
 
 	render() {
 		return (
 			<div className='editable'>
-				<div className='editable__content'>
-					{this.props.editable.content}
-				</div>
+				<div className='editable__content' dangerouslySetInnerHTML={{ __html: this.props.editable.content }}></div>
 				<div className='editable__controls'>
 				</div>
 			</div>
@@ -84,33 +86,33 @@ class Editable extends React.Component {
 
 		var $this = $(React.findDOMNode(this));
 		
-		/** Activate */
+		/** Activate an editable */
 		$this.halloActivate();
+
 		this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 		$this.on('click', this.clickCallback);
 		
-		/** Track modified status */
+		/** Track the modified status by tapping onto Hallo events */
 		$this.on('hallomodified', (event, data) => {
-			this.props.communicate();
-			this.setState({'content': 'something'});
-			$('.modified').html("Editable has been modified");
+			// console.log(data.content);
+			var content = $(data.content).html();
+			this.props.editable.content = content;
+			this.props.callParent('Editable has been modified');
 		});
+
 		$this.on('halloselected', (event, data) => {
-			this.props.communicate();
-			$('.modified').html("Selection made");
+			this.props.callParent("Selection made");
 		});
+
 		$this.on('hallounselected', (event, data) => {
-			this.props.communicate();
-			$('.modified').html("Selection removed");
+			this.props.callParent("Selection removed");
 		});
 
-		/** Deactivate all editables by double clicking on wrapper */
+		/** Deactivate all editables by double clicking on the wrapper */
 		$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($this));
-
 	}
 
 	componentDidUpdate() {
-
 	}
 
 	componentWillUnmount() {
@@ -122,19 +124,17 @@ class Editable extends React.Component {
 		$this.halloDeactivate();
 	}
 
-	// shouldComponentUpdate(newProps) {
-	// 	// if this.props.content has changed, do not trigger update - hallo is already doing this
-	// }
-
 }
 
-/** Child component. Tracks modified status of Editables by binding multiple hallo events onto the same class selector */
+/** Child component.
+ * Tracks modified status of Editables by binding multiple hallo events onto the same class selector.
+ */
 class Modified extends React.Component {
 
 	render() {
 		return (
 			<p className="modified">
-				Editables have not been modified
+				{ this.props.statusText }
 			</p>
 		);
 	}
@@ -147,6 +147,7 @@ class Modified extends React.Component {
 
 }
 
+/** Render React component tree */
 React.render(
  	<EditableList />,
  	document.body
