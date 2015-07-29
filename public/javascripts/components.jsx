@@ -25,8 +25,9 @@ class EditableList extends React.Component {
 	}
 
 	handleChildStuff() {
-		console.log('handling');
-		this.props.content = 'something';
+		console.log('handling'); //communicating
+		this.props.content = 'anything'; //how to dynamically set this to read new edits?
+		console.log(this); //sets 'anything' as this.props.content
 	}
 
 	addEditable() {
@@ -42,7 +43,6 @@ class EditableList extends React.Component {
 	}
 
 	componentDidMount() {
-		$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
 	}
 
 	componentWillUnmount() {
@@ -68,20 +68,37 @@ class Editable extends React.Component {
 	componentDidMount() {
 		console.log(this);
 		var $this = $(React.findDOMNode(this));
+		
+		/** Activate */
 		$this.halloActivate();
 		this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 		$this.on('click', this.clickCallback);
+		
+		/** Track modified status */
 		$this.on('hallomodified', (event, data) => {
 			this.props.communicate();
-			this.setState({'content': 'something'}); // Should only call on root component, not child. Also not available on ES6 class components.
-			// this.props.content = 'something'; // Do this in handleChildStuff
+			this.setState({'content': 'something'});
+			$('.modified').html("Editable has been modified");
 		});
+		$this.on('halloselected', (event, data) => {
+			this.props.communicate();
+			$('.modified').html("Selection made");
+		});
+		$this.on('hallounselected', (event, data) => {
+			this.props.communicate();
+			$('.modified').html("Selection removed");
+		});
+
+		/** Deactivate all editables by double clicking on wrapper */
+		$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
 	}
 
 	componentWillUnmount() {
 		var $this = $(React.findDOMNode(this));
 		$this.off('click');
 		$this.off('hallomodified');
+		$this.off('halloselected');
+		$this.off('hallounselected');
 		$this.halloDeactivate();
 	}
 
@@ -92,7 +109,6 @@ class Editable extends React.Component {
 }
 
 /** Child component. Tracks modified status of Editables by binding multiple hallo events onto the same class selector */
-/** TODO: Track modified status of newly added fields */
 class Modified extends React.Component {
 
 	render() {
@@ -104,14 +120,6 @@ class Modified extends React.Component {
 	}
 
 	componentDidMount() {
-		// var $modified = $('.modified');
-		// $('.editable').bind('hallomodified', function(event, data) {
-		// 	$modified.html("Editable has been modified"); //detects adding and deleting characters
-		// }).bind('halloselected', function(event, data) {
-		// 	$modified.html("Selection made"); //detects highlighting
-		// }).bind('hallounselected', function(event, data) {
-		// 	$modified.html("Selection removed"); //detects un-highlighting
-		// });
 	}
 
 	componentWillUnmount() {

@@ -41,8 +41,9 @@ var EditableList = (function (_React$Component) {
 	}, {
 		key: "handleChildStuff",
 		value: function handleChildStuff() {
-			console.log('handling');
-			this.props.content = 'something';
+			console.log('handling'); //communicating
+			this.props.content; //how to dynamically set this to read new edits?
+			console.log(this); //sets 'anything' as this.props.content
 		}
 	}, {
 		key: "addEditable",
@@ -60,9 +61,7 @@ var EditableList = (function (_React$Component) {
 		}
 	}, {
 		key: "componentDidMount",
-		value: function componentDidMount() {
-			$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
-		}
+		value: function componentDidMount() {}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {}
@@ -81,7 +80,6 @@ var Editable = (function (_React$Component2) {
 	}
 
 	/** Child component. Tracks modified status of Editables by binding multiple hallo events onto the same class selector */
-	/** TODO: Track modified status of newly added fields */
 
 	_createClass(Editable, [{
 		key: "render",
@@ -95,14 +93,29 @@ var Editable = (function (_React$Component2) {
 
 			console.log(this);
 			var $this = $(React.findDOMNode(this));
+
+			/** Activate */
 			$this.halloActivate();
 			this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 			$this.on('click', this.clickCallback);
+
+			/** Track modified status */
 			$this.on('hallomodified', function (event, data) {
 				_this2.props.communicate();
-				_this2.setState({ 'content': 'something' }); // Should only call on root component, not child. Also not available on ES6 class components.
-				// this.props.content = 'something';
+				_this2.setState({ 'content': 'something' });
+				$('.modified').html("Editable has been modified");
 			});
+			$this.on('halloselected', function (event, data) {
+				_this2.props.communicate();
+				$('.modified').html("Selection made");
+			});
+			$this.on('hallounselected', function (event, data) {
+				_this2.props.communicate();
+				$('.modified').html("Selection removed");
+			});
+
+			/** Deactivate all editables by double clicking on wrapper */
+			$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
 		}
 	}, {
 		key: "componentWillUnmount",
@@ -110,6 +123,8 @@ var Editable = (function (_React$Component2) {
 			var $this = $(React.findDOMNode(this));
 			$this.off('click');
 			$this.off('hallomodified');
+			$this.off('halloselected');
+			$this.off('hallounselected');
 			$this.halloDeactivate();
 		}
 
@@ -138,16 +153,7 @@ var Modified = (function (_React$Component3) {
 		}
 	}, {
 		key: "componentDidMount",
-		value: function componentDidMount() {
-			// var $modified = $('.modified');
-			// $('.editable').bind('hallomodified', function(event, data) {
-			// 	$modified.html("Editable has been modified"); //detects adding and deleting characters
-			// }).bind('halloselected', function(event, data) {
-			// 	$modified.html("Selection made"); //detects highlighting
-			// }).bind('hallounselected', function(event, data) {
-			// 	$modified.html("Selection removed"); //detects un-highlighting
-			// });
-		}
+		value: function componentDidMount() {}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {}

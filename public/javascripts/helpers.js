@@ -67,9 +67,9 @@ $(function() {
 		},
 
 		/** 
-		* Deactivate previously active element when you activate a new element
-		* @param {event} e
-		*/
+		 * Deactivate previously active element when you activate a new element
+		 * @param {event} e
+		 */
 		halloDeactivateSiblings: function(e) {
 			var $this = $(this),
 				$parent = $this.parent();

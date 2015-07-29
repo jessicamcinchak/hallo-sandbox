@@ -8,7 +8,7 @@ gulp.task('build', function() {
 	return gulp.src('public/javascripts/components.jsx')
 		.pipe(react(opt))
 		.pipe(babel())
-		.pipe(gulp.dest('public/dist'));
+		.pipe(gulp.dest('public/javascripts'));
 });
 
 gulp.task('default', ['build']);

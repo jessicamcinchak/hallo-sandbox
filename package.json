@@ -4,13 +4,10 @@
   "description": "Renders a list of editable html elements as React components using Hallo's live content editor.",
   "main": "gulpfile.js",
   "dependencies": {
-    "browserify": "^11.0.0",
-    "babelify": "^6.1.3",
     "express": "^4.13.0",
     "gulp": "^3.9.0",
     "react": "^0.13.0-rc2",
-    "gulp-react": "^3.0.1",
-    "vinyl-source-stream": "^1.1.0"
+    "gulp-react": "^3.0.1"
   },
   "devDependencies": {
     "gulp-babel": "^5.1.0"
@@ -23,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/jessicamcinchak/hallo-sandbox.git"
   },
-  "author": "",
+  "author": "Jessica McInchak",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jessicamcinchak/hallo-sandbox/issues"

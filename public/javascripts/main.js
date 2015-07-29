@@ -12,14 +12,14 @@
 // 	 * Use hallo events to track modified status of editable
 // 	 * Link multiple actions onto same class selector
 // 	 */
-// 	var $modified = $('#modified');
-// 	$('.editable').bind('hallomodified', function(event, data) {
-// 		$modified.html("Editable has been modified"); //detects adding and deleting characters
-// 	}).bind('halloselected', function(event, data) {
-// 		$modified.html("Selection made"); //detects highlighting
-// 	}).bind('hallounselected', function(event, data) {
-// 		$modified.html("Selection removed"); //detects un-highlighting
-// 	});
+	// var $modified = $('#modified');
+	// $('.editable').bind('hallomodified', function(event, data) {
+	// 	$modified.html("Editable has been modified"); //detects adding and deleting characters
+	// }).bind('halloselected', function(event, data) {
+	// 	$modified.html("Selection made"); //detects highlighting
+	// }).bind('hallounselected', function(event, data) {
+	// 	$modified.html("Selection removed"); //detects un-highlighting
+	// });
 
 // 	/** Paste csv data into editable, format as table, save out as JSON */
 // 	$('.editable--spreadsheet').bind('hallodeactivated', function() {
