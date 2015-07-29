@@ -1,7 +1,6 @@
 body {
 	font-family: helvetica, sans-serif;
 	line-height: 125%;
-	background-color: #f7f7f7;
 }
 
 .wrapper {
@@ -9,20 +8,21 @@ body {
 	max-width: 800px;
 	padding: 40px;
 	margin: auto;
-	border: 1px solid #443094;
-	background-color: #f0f0f0;
+	background-color: #ccc;
 }
 
 .editable {
-	border: 1.5px dashed #443094;
 	cursor: pointer;
 	margin: 35px auto;
 	padding: 10px;
-	background-color: #f7f7f7;
+	background-color: #eee;
+	font-size: 14px;
 }
 
+
 .editable--active {
-	background-color: #d9d9d9;
+	border-color: red;
+	border-width: 2px;
 }
 
 table {
@@ -41,24 +41,22 @@ td {
 a {
 	display: block;
 	position: relative;
-	width: 45%;
+	width: 25%;
 	max-width: 800px;
 	margin: 10px auto;
 	padding: 10px;
 	color: white;
-	background-color: #443094;
-	border: 1px solid #443094;
+	background-color: #323232;
+	border-radius: 5px;
 	text-align: center;
 	text-decoration: none;
-	opacity: 1;
-	font-family: inherit;
 	font-size: 16px;
-	font-weight: 100;
+	font-weight: lighter;
 	cursor: pointer;
 }
 
 a:hover { 
-	opacity: .6;
+	opacity: .8;
 }
 
 h1, h2, p {
@@ -75,6 +73,12 @@ h2 {
 
 p, table {
 	font-size: 14px;
+}
+
+.modified {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
 }
 
 .hallotoolbar {
