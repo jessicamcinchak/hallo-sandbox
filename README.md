@@ -13,5 +13,6 @@ Requires Node v0.10.0 or newer.
 
 ## Lessons Learned
 
-* onClick callbacks need to be explicitly bound if written in ES6.
-* setProps should only be called on a root component, not a child. Also, if using ES6 class components, use setState.
+* `onClick` callbacks need to be explicitly bound if written in ES6.
+* `setProps` should only be called on a root component, not a child. And when we use ES6 class components, we need to consequently use `setState` instead.
+* Also learned while transitioning to ES6, we now set state as a property on the `constructor`, rather than using `getInitialState`.

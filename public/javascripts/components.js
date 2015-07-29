@@ -16,39 +16,48 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var EditableList = (function (_React$Component) {
 	_inherits(EditableList, _React$Component);
 
-	function EditableList() {
-		_classCallCheck(this, EditableList);
-
-		_get(Object.getPrototypeOf(EditableList.prototype), "constructor", this).apply(this, arguments);
-	}
-
-	/** Child component. Editable divs that display in a list. E.g. headers, paragraphs, tables */
-
 	_createClass(EditableList, [{
 		key: "render",
 		value: function render() {
 			return React.createElement("div", { className: "wrapper", id: "main" }, React.createElement(Modified, null), this.renderList(), React.createElement("a", { href: "#", className: "add-editable", onClick: this.addEditable.bind(this) }, " Add Editable "), React.createElement("a", { href: "#", className: "save-editables", onClick: this.saveEditables.bind(this) }, " Save Editables "));
 		}
-	}, {
+
+		/** Replaces getInitialState when using ES6 classes */
+	}]);
+
+	function EditableList() {
+		_classCallCheck(this, EditableList);
+
+		_get(Object.getPrototypeOf(EditableList.prototype), "constructor", this).call(this); //this is new
+		this.state = { editables: [{
+				content: '',
+				halloState: ''
+			}]
+		};
+	}
+
+	/** Child component. Editable divs that display in a list. E.g. headers, paragraphs, tables */
+
+	_createClass(EditableList, [{
 		key: "renderList",
 		value: function renderList() {
 			var _this = this;
 
-			return this.props.contentList.map(function (content, i) {
-				return React.createElement(Editable, { key: 'editable-' + i, content: content, communicate: _this.handleChildStuff.bind(_this) });
+			return this.state.editables.map(function (editable, i) {
+				return React.createElement(Editable, { key: 'editable-' + i, editable: editable, communicate: _this.handleChildStuff.bind(_this) });
 			});
 		}
 	}, {
 		key: "handleChildStuff",
 		value: function handleChildStuff() {
 			console.log('handling'); //communicating
-			this.props.content; //how to dynamically set this to read new edits?
+			this.props.content = 'anything'; //how to dynamically set this to read new edits?
 			console.log(this); //sets 'anything' as this.props.content
 		}
 	}, {
 		key: "addEditable",
 		value: function addEditable() {
-			this.props.contentList.push('New Field');
+			this.state.editables.push({ content: 'New Field', halloState: '' });
 			this.forceUpdate();
 		}
 	}, {
@@ -61,7 +70,9 @@ var EditableList = (function (_React$Component) {
 		}
 	}, {
 		key: "componentDidMount",
-		value: function componentDidMount() {}
+		value: function componentDidMount() {
+			$('.wrapper').on('dblclick', function () {});
+		}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {}
@@ -84,14 +95,13 @@ var Editable = (function (_React$Component2) {
 	_createClass(Editable, [{
 		key: "render",
 		value: function render() {
-			return React.createElement("div", { className: "editable" }, React.createElement("div", { className: "editable__content" }, this.props.content), React.createElement("div", { className: "editable__controls" }));
+			return React.createElement("div", { className: "editable" }, React.createElement("div", { className: "editable__content" }, this.props.editable.content), React.createElement("div", { className: "editable__controls" }));
 		}
 	}, {
 		key: "componentDidMount",
 		value: function componentDidMount() {
 			var _this2 = this;
 
-			console.log(this);
 			var $this = $(React.findDOMNode(this));
 
 			/** Activate */
@@ -115,8 +125,11 @@ var Editable = (function (_React$Component2) {
 			});
 
 			/** Deactivate all editables by double clicking on wrapper */
-			$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
+			$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($this));
 		}
+	}, {
+		key: "componentDidUpdate",
+		value: function componentDidUpdate() {}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {
@@ -162,4 +175,4 @@ var Modified = (function (_React$Component3) {
 	return Modified;
 })(React.Component);
 
-React.render(React.createElement(EditableList, { contentList: [1, 2, 3] }), document.body);
+React.render(React.createElement(EditableList, null), document.body);

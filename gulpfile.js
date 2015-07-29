@@ -11,4 +11,11 @@ gulp.task('build', function() {
 		.pipe(gulp.dest('public/javascripts'));
 });
 
-gulp.task('default', ['build']);
+gulp.task('watch', function() {
+	gulp.watch('public/javascripts/*.js');
+	gulp.watch('public/javascripts/*.jsx', ['build']);
+	gulp.watch('public/css/*.css');
+	gulp.watch('public/index.html');
+});
+
+gulp.task('default', ['build', 'watch']);

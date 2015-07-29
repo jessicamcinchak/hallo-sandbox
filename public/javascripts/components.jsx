@@ -16,10 +16,22 @@ class EditableList extends React.Component {
 		);
 	}
 
+	/** Replaces getInitialState when using ES6 classes */
+	constructor() {
+		super(); //this is new
+		this.state = { editables: [
+				{
+					content: '',
+					halloState: ''
+				}
+			]
+		}
+	}
+
 	renderList() {
-		return this.props.contentList.map((content, i) => {
+		return this.state.editables.map((editable, i) => {
 			return (
-				<Editable key={'editable-' + i} content={content} communicate={this.handleChildStuff.bind(this)} />
+				<Editable key={'editable-' + i} editable={editable} communicate={this.handleChildStuff.bind(this)} />
 			);
 		});
 	}
@@ -31,7 +43,7 @@ class EditableList extends React.Component {
 	}
 
 	addEditable() {
-		this.props.contentList.push('New Field');
+		this.state.editables.push({ content: 'New Field', halloState: '' });
 		this.forceUpdate();
 	}
 
@@ -43,6 +55,9 @@ class EditableList extends React.Component {
 	}
 
 	componentDidMount() {
+		$('.wrapper').on('dblclick', () => {
+
+		});
 	}
 
 	componentWillUnmount() {
@@ -57,7 +72,7 @@ class Editable extends React.Component {
 		return (
 			<div className='editable'>
 				<div className='editable__content'>
-					{this.props.content}
+					{this.props.editable.content}
 				</div>
 				<div className='editable__controls'>
 				</div>
@@ -66,7 +81,7 @@ class Editable extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log(this);
+
 		var $this = $(React.findDOMNode(this));
 		
 		/** Activate */
@@ -90,7 +105,12 @@ class Editable extends React.Component {
 		});
 
 		/** Deactivate all editables by double clicking on wrapper */
-		$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($('.editable')));
+		$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($this));
+
+	}
+
+	componentDidUpdate() {
+
 	}
 
 	componentWillUnmount() {
@@ -128,6 +148,6 @@ class Modified extends React.Component {
 }
 
 React.render(
- 	<EditableList contentList={[1, 2, 3]} />,
+ 	<EditableList />,
  	document.body
 );
