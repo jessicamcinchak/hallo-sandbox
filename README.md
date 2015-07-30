@@ -2,7 +2,9 @@
 
 Renders a list of editable html elements, in the straight-forward design of a blog or similar content-entry form interface, using [React](http://facebook.github.io/react/) with [Hallo.js](http://hallojs.org) to edit text in-place.
 
-As a technical prototype exercise, I'm using jQuery plugin helper methods to manage Hallo's events, and then I bind them to reusable React UI components. With React, my components act like functions - they take in data (as state or props) and render HTML (in this case simple text fields).  I'm adopting ES6 classes among other new JavaScript features, supported by React v0.13.0, and compiling my code with `gulp-babel` and `gulp-react` node modules.
+As a technical prototype exercise, I'm using jQuery plugin helper methods to manage Hallo's events, and then I bind them to reusable React UI components. With React, my components act like functions - they take in data (as state or props) and render HTML (in this case simple text fields).  
+
+I'm adopting ES6 classes among other new JavaScript features, supported by React v0.13.0, and compiling my code with `gulp-babel` and `gulp-react` node modules.
 
 ## Dev
 
