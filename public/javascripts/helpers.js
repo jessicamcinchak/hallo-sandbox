@@ -15,7 +15,7 @@ $(function() {
 				$this.addClass('editable--active');
 				$this.hallo({
 					editable: true, //activate hallo editables
-					plugins: { //add basic editing toolbar (no icon images yet). Issue: Shows on first active editable, then "not found"
+					plugins: { //add basic editing toolbar (no icon images yet). Additional plugins available to set h1, h2, p etc.
 						'halloformat': {
 							'bold': true,
 							'italic': true

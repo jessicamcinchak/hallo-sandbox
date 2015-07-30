@@ -1,33 +1,54 @@
 body {
 	font-family: helvetica, sans-serif;
-	line-height: 125%;
 }
 
 .wrapper {
 	width: 90%;
 	max-width: 800px;
-	padding: 40px;
 	margin: auto;
-	background-color: #ccc;
+	padding: 40px;
+	background-color: #e4e4e4;
+}
+
+.modified {
+	font-size: 18px;
+	font-weight: lighter;
+	text-align: center;
 }
 
 .editable {
 	cursor: pointer;
 	margin: 35px auto;
 	padding: 10px;
-	background-color: #eee;
-	font-size: 14px;
+	background-color: white;
+	font-size: 16px;
+	font-weight: lighter;
 }
 
-
 .editable--active {
-	border-color: red;
-	border-width: 2px;
+	border: solid 2px;
+	border-color: #9D3384;
+	outline: none;
+	font-size: 16px;
+	font-weight: lighter;
+}
+
+.hallotoolbar {
+	padding: 5px;
+}
+
+h1, h2, p {
+	margin: auto;
+	padding: 5px;
+	font-size: 16px;
+	font-weight: lighter;
 }
 
 table {
 	margin: auto;
-	padding: 3px;
+	padding: 5px;
+	font-size: 16px;
+	font-weight: lighter;
 }
 
 td, tr { 
@@ -35,7 +56,7 @@ td, tr {
 }
 
 td {
-	border: 1px solid #443094;
+	border: 1px solid #ccc;
 }
 
 a {
@@ -45,42 +66,17 @@ a {
 	max-width: 800px;
 	margin: 10px auto;
 	padding: 10px;
-	color: white;
-	background-color: #323232;
-	border-radius: 5px;
+	border: solid 3px;
+	border-color: #323232;
+	border-radius: 8px;
+	color: #323232;
 	text-align: center;
 	text-decoration: none;
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: lighter;
 	cursor: pointer;
 }
 
 a:hover { 
 	opacity: .8;
-}
-
-h1, h2, p {
-	padding: 3px;
-}
-
-h1 {
-	font-size: 18px;
-}
-
-h2 {
-	font-size: 16px;
-}
-
-p, table {
-	font-size: 14px;
-}
-
-.modified {
-	font-size: 14px;
-	font-weight: bold;
-	text-align: center;
-}
-
-.hallotoolbar {
-	padding: 5px;
 }

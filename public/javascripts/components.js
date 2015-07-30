@@ -20,11 +20,13 @@ var EditableList = (function (_React$Component) {
 
 	_createClass(EditableList, [{
 		key: "render",
+
+		/** Render component tree */
 		value: function render() {
 			return React.createElement("div", { className: "wrapper", id: "main" }, React.createElement(Modified, { statusText: this.state.statusText }), this.renderList(), React.createElement("a", { href: "#", className: "add-editable", onClick: this.addEditable.bind(this) }, " Add Editable "), React.createElement("a", { href: "#", className: "save-editables", onClick: this.saveEditables.bind(this) }, " Save Editables "));
 		}
 
-		/* Set state. (Constructor replaces getInitialState when using ES6 classes) */
+		/** Set state. (Constructor replaces getInitialState in React when using ES6 classes) */
 	}]);
 
 	function EditableList() {
@@ -32,7 +34,7 @@ var EditableList = (function (_React$Component) {
 
 		_get(Object.getPrototypeOf(EditableList.prototype), "constructor", this).call(this);
 		this.state = {
-			statusText: 'Welcome! Editables have not been modified yet.',
+			statusText: 'Editables have not been modified yet.',
 			editables: [{
 				content: '<p>New Field</p>',
 				type: '',
@@ -45,6 +47,8 @@ var EditableList = (function (_React$Component) {
   * Editable divs that display in a list. E.g. headers, paragraphs, tables
   */
 
+	/** Renders array of editable components, assigns unique key to each, and binds to   */
+
 	_createClass(EditableList, [{
 		key: "renderList",
 		value: function renderList() {
@@ -54,18 +58,24 @@ var EditableList = (function (_React$Component) {
 				return React.createElement(Editable, { key: 'editable-' + i, editable: editable, callParent: _this.handleChildModifications.bind(_this) });
 			});
 		}
+
+		/** Communicate with child components, track modified status of editables */
 	}, {
 		key: "handleChildModifications",
 		value: function handleChildModifications(status) {
 			this.state.statusText = status;
 			this.forceUpdate();
 		}
+
+		/** Link to add new editable field */
 	}, {
 		key: "addEditable",
 		value: function addEditable() {
-			this.state.editables.push({ content: 'New Field', halloState: '' });
+			this.state.editables.push({ content: '<p>New Field<p>', halloState: '' });
 			this.forceUpdate();
 		}
+
+		/** Link to save contents of all editables */
 	}, {
 		key: "saveEditables",
 		value: function saveEditables() {
@@ -73,7 +83,7 @@ var EditableList = (function (_React$Component) {
 				return editable.content;
 			});
 			console.log(downloadContent.join(' -- '));
-			//later introduce node/express here to send via server?
+			// Todo: use node/express to save
 		}
 	}, {
 		key: "componentDidMount",
@@ -104,6 +114,8 @@ var Editable = (function (_React$Component2) {
 		value: function render() {
 			return React.createElement("div", { className: "editable" }, React.createElement("div", { className: "editable__content", dangerouslySetInnerHTML: { __html: this.props.editable.content } }), React.createElement("div", { className: "editable__controls" }));
 		}
+
+		/** Batch-apply event listeners to all editable components */
 	}, {
 		key: "componentDidMount",
 		value: function componentDidMount() {
@@ -114,10 +126,11 @@ var Editable = (function (_React$Component2) {
 			/** Activate an editable */
 			$this.halloActivate();
 
+			/** Activate editable on click by activating closest editable parent */
 			this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 			$this.on('click', this.clickCallback);
 
-			/** Track the modified status by tapping onto Hallo events */
+			/** Track modified status by tapping onto Hallo events */
 			$this.on('hallomodified', function (event, data) {
 				// console.log(data.content);
 				var content = $(data.content).html();
@@ -139,6 +152,8 @@ var Editable = (function (_React$Component2) {
 	}, {
 		key: "componentDidUpdate",
 		value: function componentDidUpdate() {}
+
+		/* Clean up event listeners */
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {
@@ -163,7 +178,7 @@ var Modified = (function (_React$Component3) {
 		_get(Object.getPrototypeOf(Modified.prototype), "constructor", this).apply(this, arguments);
 	}
 
-	/** Render React component tree */
+	/** Call React.render once on most top-level component */
 
 	_createClass(Modified, [{
 		key: "render",

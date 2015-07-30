@@ -13,6 +13,8 @@ Requires Node v0.10.0 or newer.
 
 ## Lessons Learned
 
-* `onClick` callbacks need to be explicitly bound if written in ES6.
-* `setProps` should only be called on a root component, not a child. And when we use ES6 class components, we need to consequently use `setState` instead.
-* Also learned while transitioning to ES6, we now set state as a property on the `constructor`, rather than using `getInitialState`.
+React v0.13.0 adds support for ES6, and this project is a prototype to adopt ES6 classes in my React code. I'm finding out that React works differently with ES6 in these ways:
+
+* `onClick` callbacks need to be explicitly bound
+* The initial state of a component is set as a property on the `constructor`, rather than using `getInitialState`. Same goes for `defaultProps` and `propTypes`
+* `setProps` should only be called on the root component, not on a child. And in ES6, use `setState` instead

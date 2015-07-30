@@ -7,6 +7,7 @@
  */
 class EditableList extends React.Component {
 
+	/** Render component tree */
 	render() {
 		return (
 			<div className='wrapper' id='main'>
@@ -18,11 +19,11 @@ class EditableList extends React.Component {
 		);
 	}
 
-	/* Set state. (Constructor replaces getInitialState when using ES6 classes) */
+	/** Set state. (Constructor replaces getInitialState in React when using ES6 classes) */
 	constructor() {
 		super();
 		this.state = {
-			statusText: 'Welcome! Editables have not been modified yet.',
+			statusText: 'Editables have not been modified yet.',
 			editables: [
 				{
 					content: '<p>New Field</p>',
@@ -33,6 +34,7 @@ class EditableList extends React.Component {
 		}
 	}
 
+	/** Renders array of editable components, assigns unique key to each, and binds to   */
 	renderList() {
 		return this.state.editables.map((editable, i) => {
 			return (
@@ -41,22 +43,25 @@ class EditableList extends React.Component {
 		});
 	}
 
+	/** Communicate with child components, track modified status of editables */
 	handleChildModifications(status) {
 		this.state.statusText = status;
 		this.forceUpdate();
 	}
 
+	/** Link to add new editable field */
 	addEditable() {
-		this.state.editables.push({ content: 'New Field', halloState: '' });
+		this.state.editables.push({ content: '<p>New Field<p>', halloState: '' });
 		this.forceUpdate();
 	}
 
+	/** Link to save contents of all editables */
 	saveEditables() {
 		var downloadContent = this.state.editables.map(function(editable) {
 			return editable.content;
 		});
 		console.log(downloadContent.join(' -- '));
-		//later introduce node/express here to send via server?
+		// Todo: use node/express to save
 	}
 
 	componentDidMount() {
@@ -82,6 +87,7 @@ class Editable extends React.Component {
 		);
 	}
 
+	/** Batch-apply event listeners to all editable components */
 	componentDidMount() {
 
 		var $this = $(React.findDOMNode(this));
@@ -89,10 +95,11 @@ class Editable extends React.Component {
 		/** Activate an editable */
 		$this.halloActivate();
 
+		/** Activate editable on click by activating closest editable parent */
 		this.clickCallback = $.fn.halloActivateClosestEditableParent.bind($(this));
 		$this.on('click', this.clickCallback);
 		
-		/** Track the modified status by tapping onto Hallo events */
+		/** Track modified status by tapping onto Hallo events */
 		$this.on('hallomodified', (event, data) => {
 			// console.log(data.content);
 			var content = $(data.content).html();
@@ -115,6 +122,7 @@ class Editable extends React.Component {
 	componentDidUpdate() {
 	}
 
+	/* Clean up event listeners */
 	componentWillUnmount() {
 		var $this = $(React.findDOMNode(this));
 		$this.off('click');
@@ -147,7 +155,7 @@ class Modified extends React.Component {
 
 }
 
-/** Render React component tree */
+/** Call React.render once on most top-level component */
 React.render(
  	<EditableList />,
  	document.body
