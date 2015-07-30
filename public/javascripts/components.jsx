@@ -1,8 +1,5 @@
-/**
- * @jsx React.DOM
- */
-
-/** Top level component. 
+/** 
+ * Top level component 
  * Main wrapper that holds a list of editable components 
  */
 class EditableList extends React.Component {
@@ -26,7 +23,28 @@ class EditableList extends React.Component {
 			statusText: 'Editables have not been modified yet.',
 			editables: [
 				{
-					content: '<p>New Field</p>',
+					content: "<h1>Blog Title</h1>",
+					type: '', // Ex. title, section-header, paragraph, table. How to process this dynamically when an editable is drawn, set new class like 'editable--title'?
+					halloState: ''
+				},
+				{
+					content: "I'm a paragraph. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
+					type: '',
+					halloState: ''
+				}, 
+				{
+					content: "I'm another paragraph. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.",
+					type: '',
+					halloState: ''
+				
+				},
+				{
+					content: "<h2>Section Header</h2>",
+					type: '',
+					halloState: ''
+				},
+				{
+					content: "I'm the last paragraph. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.",
 					type: '',
 					halloState: ''
 				}
@@ -34,7 +52,7 @@ class EditableList extends React.Component {
 		}
 	}
 
-	/** Renders array of editable components, assigns unique key to each, and binds to   */
+	/** Renders array of editable components, assigns unique key to each, and binds to modified status of children */
 	renderList() {
 		return this.state.editables.map((editable, i) => {
 			return (
@@ -51,7 +69,7 @@ class EditableList extends React.Component {
 
 	/** Link to add new editable field */
 	addEditable() {
-		this.state.editables.push({ content: '<p>New Field<p>', halloState: '' });
+		this.state.editables.push({ content: 'New Field', type: '', halloState: '' });
 		this.forceUpdate();
 	}
 
@@ -61,7 +79,7 @@ class EditableList extends React.Component {
 			return editable.content;
 		});
 		console.log(downloadContent.join(' -- '));
-		// Todo: use node/express to save
+		// Todo: use node/express to save in a more sophisticated way 
 	}
 
 	componentDidMount() {
@@ -72,7 +90,8 @@ class EditableList extends React.Component {
 
 }
 
-/** Child component. 
+/** 
+ * Child component 
  * Editable divs that display in a list. E.g. headers, paragraphs, tables
  */
 class Editable extends React.Component {
@@ -119,7 +138,9 @@ class Editable extends React.Component {
 		$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($this));
 	}
 
-	componentDidUpdate() {
+	/** React wants to rerender every time text is edited, but we just need editables to mount once with their events */
+	shouldComponentUpdate() {
+		return false;
 	}
 
 	/* Clean up event listeners */
@@ -134,8 +155,9 @@ class Editable extends React.Component {
 
 }
 
-/** Child component.
- * Tracks modified status of Editables by binding multiple hallo events onto the same class selector.
+/** 
+ * Child component
+ * Tracks modified status of Editables by binding multiple hallo events onto the same class selector
  */
 class Modified extends React.Component {
 

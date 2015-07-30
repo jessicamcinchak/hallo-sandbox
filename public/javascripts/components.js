@@ -1,8 +1,5 @@
-/**
- * @jsx React.DOM
- */
-
-/** Top level component. 
+/** 
+ * Top level component 
  * Main wrapper that holds a list of editable components 
  */
 "use strict";
@@ -36,18 +33,36 @@ var EditableList = (function (_React$Component) {
 		this.state = {
 			statusText: 'Editables have not been modified yet.',
 			editables: [{
-				content: '<p>New Field</p>',
+				content: "<h1>Blog Title</h1>",
+				type: '', // Ex. title, section-header, paragraph, table. How to process this dynamically when an editable is drawn, set new class like 'editable--title'?
+				halloState: ''
+			}, {
+				content: "I'm a paragraph. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
+				type: '',
+				halloState: ''
+			}, {
+				content: "I'm another paragraph. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.",
+				type: '',
+				halloState: ''
+
+			}, {
+				content: "<h2>Section Header</h2>",
+				type: '',
+				halloState: ''
+			}, {
+				content: "I'm the last paragraph. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.",
 				type: '',
 				halloState: ''
 			}]
 		};
 	}
 
-	/** Child component. 
+	/** 
+  * Child component 
   * Editable divs that display in a list. E.g. headers, paragraphs, tables
   */
 
-	/** Renders array of editable components, assigns unique key to each, and binds to   */
+	/** Renders array of editable components, assigns unique key to each, and binds to modified status of children */
 
 	_createClass(EditableList, [{
 		key: "renderList",
@@ -71,7 +86,7 @@ var EditableList = (function (_React$Component) {
 	}, {
 		key: "addEditable",
 		value: function addEditable() {
-			this.state.editables.push({ content: '<p>New Field<p>', halloState: '' });
+			this.state.editables.push({ content: 'New Field', type: '', halloState: '' });
 			this.forceUpdate();
 		}
 
@@ -83,7 +98,7 @@ var EditableList = (function (_React$Component) {
 				return editable.content;
 			});
 			console.log(downloadContent.join(' -- '));
-			// Todo: use node/express to save
+			// Todo: use node/express to save in a more sophisticated way
 		}
 	}, {
 		key: "componentDidMount",
@@ -105,8 +120,9 @@ var Editable = (function (_React$Component2) {
 		_get(Object.getPrototypeOf(Editable.prototype), "constructor", this).apply(this, arguments);
 	}
 
-	/** Child component.
-  * Tracks modified status of Editables by binding multiple hallo events onto the same class selector.
+	/** 
+  * Child component
+  * Tracks modified status of Editables by binding multiple hallo events onto the same class selector
   */
 
 	_createClass(Editable, [{
@@ -149,9 +165,13 @@ var Editable = (function (_React$Component2) {
 			/** Deactivate all editables by double clicking on the wrapper */
 			$('.wrapper').on('dblclick', $.fn.halloDeactivate.bind($this));
 		}
+
+		/** React wants to rerender every time text is edited, but we just need editables to mount once with their events */
 	}, {
-		key: "componentDidUpdate",
-		value: function componentDidUpdate() {}
+		key: "shouldComponentUpdate",
+		value: function shouldComponentUpdate() {
+			return false;
+		}
 
 		/* Clean up event listeners */
 	}, {
