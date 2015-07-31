@@ -4,7 +4,7 @@ Renders a list of editable html elements, in the straight-forward design of a bl
 
 As a technical prototype exercise, I'm using jQuery plugin helper methods to manage Hallo's events, and then I bind them to reusable React UI components. With React, my components act like functions - they take in data (as state or props) and render HTML (in this case simple text fields).  
 
-I'm adopting ES6 classes among other new JavaScript features, supported by React v0.13.0, and compiling my code with `gulp-babel` and `gulp-react` node modules.
+I'm adopting ES6 classes among other new JavaScript features, supported by React v0.13.x, and compiling my code with `gulp-babel` (ES6 -> ES5) and `gulp-react` (JSX -> JS).
 
 ## Dev
 

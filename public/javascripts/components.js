@@ -128,7 +128,12 @@ var Editable = (function (_React$Component2) {
 	_createClass(Editable, [{
 		key: "render",
 		value: function render() {
-			return React.createElement("div", { className: "editable" }, React.createElement("div", { className: "editable__content", dangerouslySetInnerHTML: { __html: this.props.editable.content } }), React.createElement("div", { className: "editable__controls" }));
+			return(
+				// <div className='editable-wrapper'> //add container with add button inbetween each editable
+				React.createElement("div", { ref: "editable", className: "editable" }, React.createElement("div", { className: "editable__content", dangerouslySetInnerHTML: { __html: this.props.editable.content } }))
+				// </div>
+
+			);
 		}
 
 		/** Batch-apply event listeners to all editable components */
@@ -137,7 +142,7 @@ var Editable = (function (_React$Component2) {
 		value: function componentDidMount() {
 			var _this2 = this;
 
-			var $this = $(React.findDOMNode(this));
+			var $this = $(React.findDOMNode(this.refs['editable']));
 
 			/** Activate an editable */
 			$this.halloActivate();
@@ -177,7 +182,7 @@ var Editable = (function (_React$Component2) {
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {
-			var $this = $(React.findDOMNode(this));
+			var $this = $(React.findDOMNode(this.refs['editable']));
 			$this.off('click');
 			$this.off('hallomodified');
 			$this.off('halloselected');

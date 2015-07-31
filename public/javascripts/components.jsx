@@ -98,18 +98,18 @@ class Editable extends React.Component {
 
 	render() {
 		return (
-			<div className='editable'>
-				<div className='editable__content' dangerouslySetInnerHTML={{ __html: this.props.editable.content }}></div>
-				<div className='editable__controls'>
+			// <div className='editable-wrapper'> //add container with add button inbetween each editable
+				<div ref='editable' className='editable'>
+					<div className='editable__content' dangerouslySetInnerHTML={{ __html: this.props.editable.content }}></div>
 				</div>
-			</div>
+			// </div>
 		);
 	}
 
 	/** Batch-apply event listeners to all editable components */
 	componentDidMount() {
 
-		var $this = $(React.findDOMNode(this));
+		var $this = $(React.findDOMNode(this.refs['editable']));
 		
 		/** Activate an editable */
 		$this.halloActivate();
@@ -145,7 +145,7 @@ class Editable extends React.Component {
 
 	/* Clean up event listeners */
 	componentWillUnmount() {
-		var $this = $(React.findDOMNode(this));
+		var $this = $(React.findDOMNode(this.refs['editable']));
 		$this.off('click');
 		$this.off('hallomodified');
 		$this.off('halloselected');
